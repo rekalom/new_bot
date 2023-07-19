@@ -1,6 +1,6 @@
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import Message, ContentType
 
 BOT_TOKEN: str = 'BOT TOKEN HERE'
 
@@ -23,7 +23,11 @@ async def process_help_command(message: Message) -> None:
 # кроме команд "/start" и "/help"
 @dp.message()
 async def send_echo(message: Message) -> None:
-    await message.reply(text=message.text)
+    try:
+        await message.send_copy(chat_id=message.chat.id)
+    except TypeError:
+        await message.reply(text='Данный тип апдейтов не поддерживается '
+                            'методом send_copy')
 
 if __name__ == '__main__':
     dp.run_polling(bot)
