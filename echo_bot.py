@@ -3,8 +3,12 @@ import random
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command, Text
 from aiogram.types import Message, ContentType
+from environs import Env
 
-BOT_TOKEN: str = #'BOT TOKEN HERE'
+env = Env()            # Создаём эземпляр класса Env
+env.read_env()         # Методом read_env() читаем файл .env и загружаем из него переменные в окружение
+
+BOT_TOKEN = env('BOT_TOKEN')    # Сохраняем значение перменной окружения в переменную bot_token
 
 # Создаём объекты бота и деспетчера
 bot: Bot = Bot(token=BOT_TOKEN)
